@@ -1,0 +1,164 @@
+BOOST YOUR CONFORMITY
+ BRAND GUIDELINES 2025
+Introduction
+ WHAT IS CONFOUP
+ ConfoUP is a next-generation compliance
+ platform that merges technology,
+ simplicity, and trust.
+ It speaks to professionals who want to
+ stay compliant and improve continuously.
+ The brand communicates clarity,
+ reliability, and innovation, helping users
+ stay up in every sense — compliance UP,
+ performance UP, confidence UP.
+ BRAND GUIDELINES 2025
+ 01
+Brand Identity Summary
+ BRAND GUIDELINES 2025
+ Main Objective
+ To provide a smart, centralized, and
+ automated solution for managing
+ regulatory compliance and
+ continuous improvement in
+ organizations.
+ Brand Name: ConfoUP
+ Tagline: Empowering digital compliance and improvement.
+ Sector: QHSE / Regulatory compliance / Digital management systems
+ Specific Objectives
+ 1.Simplify conformity tracking through automation and
+ intuitive dashboards.
+ 2.Centralize documents, regulations, and audits in one
+ secure digital space.
+ 3.Enhance efficiency by reducing time spent on manual
+ checks.
+ 4.Empower QHSE professionals with analytical tools and
+ compliance alerts.
+ Long-Term Vision
+ Become the reference digital
+ platform for conformity and audit
+ management in Africa and the
+ Middle East, promoting a culture of
+ compliance and excellence in
+ organizations.
+Value Expression
+ Trust Transparent data management
+ Innovation Regular feature updates
+ Simplicity User-centered design
+ Progress Tools for performance tracking
+ Integrity Honest and data-driven
+ communication
+ Brand Philosophy
+ ConfoUP believes that compliance should be
+ simple, transparent, and continuous, not a burden.
+ It turns complex regulatory systems into intuitive,
+ intelligent workflows.
+ 03
+ BRAND GUIDELINES 2025
+ “We lift your compliance to the next level — safely
+ and smartly.”
+ BRAND PROMISE
+ Core Idea
+04
+ BRAND GUIDELINES 2025
+ Target Audience
+ QHSE Managers &
+ Quality Engineers
+ Auditors and
+ regulatory authorities Consultants
+ Simplify conformity tracking.
+ Automate document updates and notifications.
+ Have visual dashboards for audits and management reviews.
+ Ensure real-time monitoring of compliance status.
+ USER NEEDS
+ Top management 
+Brand Positioning
+ Positioning Statement
+ 05
+ BRAND GUIDELINES 2025
+ “ConfoUP is the digital partner that helps organizations
+ maintain, monitor, and improve their regulatory and quality
+ compliance — easily and efficiently.”
+Brand Positioning
+ Differentiation
+ 06
+ BRAND GUIDELINES 2025
+ Lightweight and user-friendly.
+ Multilingual interface (French, Arabic, English).
+ Automatic OCR & regulatory updates (planned).
+ Focused on digital transformation of QHSE management.
+Trait & Emotion
+ Brand Personality
+ Trait Description Emotion
+ Reliable Feels secure and stable Trust
+ Smart Tech-driven and
+ intelligent Efficiency
+ Energetic Motivates improvement Progress
+ Transparent Clear communication Honesty
+ Human Accessible design and
+ language Connection 07 BRAND GUIDELINES 2025
+Type Color HEX Meaning
+ Primary
+ Secondary
+ Accent 1
+ Accent 2
+ Neutral
+ BRAND GUIDELINES 2025
+ Deep Navy
+ Bright Red
+ Cyan
+ Warm Orange
+ Off White
+ #051943
+ #F71735
+ #41EAD4
+ #FF9F1C
+ #FDFFFC
+ Trust,
+ professionalism
+ Action,
+ alertness
+ Innovation,
+ clarity
+ Dynamism,
+ optimism
+ Simplicity,
+ cleanliness
+ Brand Visual
+ Identity &
+ Typography
+ SHAPES & GRAPHICS
+ Use rounded edges and geometric
+ forms (circles, rectangles).
+ Avoid sharp triangles or overly
+ decorative icons.
+ Prefer flat design with subtle
+ shadows.
+Logo Variations
+ Two Types
+ Main Logo
+ BRAND GUIDELINES 2025
+ Monochrome: White background
+ on dark.
+ 09
+ Secondary Logo
+ Icon only (for favicon, mobile app).
+Digital & UI
+ Guidelines
+ Buttons
+ Primary: #F71735, text white.
+ Hover: Gradient red → orange.
+ Secondary: #41EAD4 outline, text
+ #41EAD4.
+ Data Visualization
+ Use Cyan, Red, and Orange for data series.
+ Backgrounds must contrast (light or dark).
+ Dark Mode
+ Cards & Panels
+ BRAND GUIDELINES 2025
+ Background: #FDFFFC
+ Accent: Thin border in #41EAD4 or
+ icon in #FF9F1C
+ Background: #051943
+ Text: #FDFFFC
+ Buttons: #41EAD4 or #F71735
+ 10

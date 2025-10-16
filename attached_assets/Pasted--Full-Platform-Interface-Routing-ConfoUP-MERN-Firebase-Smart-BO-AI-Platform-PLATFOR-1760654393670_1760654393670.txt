@@ -1,0 +1,245 @@
+⚙️ Full Platform Interface & Routing — ConfoUP | MERN + Firebase | Smart BO AI Platform
+
+🏗️ PLATFORM OVERVIEW
+
+Create a high-end web platform called ConfoUP, built with MERN stack + Firebase, bilingual (French/Arabic).
+This app delivers a Smart BO Maroc system — helping users receive, filter, and understand official Moroccan BO documents through AI-driven personalization.
+
+The platform serves 3 distinct user types:
+
+🏢 Entreprise
+
+🎓 Particulier / Étudiant
+
+🧩 Bureau d’Étude
+
+Each has a dedicated dashboard, features, and user flow.
+
+The entire system should follow Peak Power World brand identity — professional, clean, luxurious, bilingual.
+
+🎨 BRANDING & DESIGN GUIDELINES
+
+Brand: ConfoUP
+Owner: Peak Power World (Youness Talha)
+Theme: Professional • Elegant • Intelligent • Moroccan official
+Colors: ⚫️ Black & 🟡 Gold (main palette), 🩶 Light gray for surfaces, 🟢 Green accent for “active” or “Islamic trust” visual tone
+Typography: Use modern, official-style font (e.g., Poppins or Cairo)
+Mood: Institutional + startup hybrid
+Animations: Smooth transitions and small hover effects
+Language toggle: Arabic ↔ French switch at top-right
+
+🧭 ROUTING STRUCTURE (End-to-End)
+
+Top-Level Navigation (always visible):
+
+Logo (ConfoUP)
+
+Buttons:
+
+“🏢 Entreprise”
+
+“🎓 Particulier / Étudiant”
+
+“🧩 Bureau d’Étude”
+
+Login | Register buttons (top-right)
+
+Language Switch (Arabic/French)
+
+Routes:
+
+/
+│
+├── /vitrine
+│   ├── who-we-are
+│   ├── engagement
+│   ├── awareness
+│   └── contact
+│
+├── /auth
+│   ├── login
+│   └── register
+│
+├── /entreprise
+│   ├── dashboard
+│   ├── alerts
+│   ├── manage-business
+│   ├── analytics
+│   └── profile
+│
+├── /particulier
+│   ├── dashboard
+│   ├── smart-search
+│   └── favorites
+│
+└── /bureaux
+    ├── dashboard
+    ├── entreprise-boxes
+    │   ├── add-entreprise
+    │   ├── manage-entreprise/:id
+    │   └── all-entreprises-overview
+    ├── analytics
+    └── profile
+
+🧩 USER FLOW DETAILS
+1️⃣ Entreprise Dashboard
+
+Registration form asks for:
+
+Company Name, Sector, Registration Number, Activity Type, Location, Contact Person, Email.
+
+Dashboard UI:
+
+Left sidebar: Home | Alerts | Manage | Analytics | Profile
+
+Main cards:
+
+“Latest BO Updates” (AI-filtered)
+
+“My Business Insights” (bar chart + pie chart showing alert types)
+
+“Active Regulations” list
+
+Alert System: When a new BO matches the company’s domain → show push alert + email alert.
+
+Charts: Use bar charts for alert categories, line chart for monthly updates.
+
+2️⃣ Particulier / Étudiant Dashboard
+
+Focus only on Smart Search UI
+
+Simple interface:
+
+Search bar (with voice + text input)
+
+“Recent Publications”
+
+“Save Results”
+
+“Recommended Topics”
+
+Dashboard has:
+
+Search input + filter (field, date, category)
+
+Result cards showing simplified BO summary (AI summarized)
+
+“Mark as important” / “Save for later” buttons
+
+3️⃣ Bureau d’Étude Dashboard (Advanced)
+
+During registration, the system asks for Organization details + proof of legal identity.
+
+Once logged in, user can:
+
+Create multiple “Entreprise Boxes”
+
+Each box = managed entreprise (like a project folder)
+
+Add entreprise details manually
+
+Assign team members per entreprise
+
+Dashboard view:
+
+Top section: “All Entreprises Overview” (cards showing each entreprise)
+
+Middle: “Alerts per entreprise” (grouped charts)
+
+Bottom: “Recent BO actions” (timeline view)
+
+Option to switch between entreprise dashboards.
+
+Add AI-powered insights like:
+
+“Top regulatory risks this month”
+
+“Pending compliance actions”
+
+Charts:
+
+Donut for active/inactive alerts
+
+Heatmap for entreprise activity
+
+Line chart for alert trends
+
+⚙️ AI INTEGRATION SYSTEM
+
+Backend connects to a custom LLM (Vibe AI) fine-tuned on Moroccan BO documents.
+
+The AI filters published BO data based on:
+
+User’s business type
+
+Sector
+
+Alert priority
+
+Alerts trigger Firebase Cloud Messaging (FCM) notifications + in-app banners.
+
+AI provides simplified summaries in Arabic & French.
+
+💾 DATA & DASHBOARD UX DESIGN
+
+Use dynamic dashboard cards that can be resized or pinned.
+
+Integrate visual charts (Recharts / Chart.js) with animations.
+
+Each dashboard saves user preferences locally (via MongoDB + Firebase Sync).
+
+UI should be responsive, with dark/light mode toggle.
+
+🎯 CALL TO ACTION & VITRINE PAGE
+
+Homepage / Vitrine:
+
+Full hero section:
+
+Big tagline: “Simplifiez votre conformité officielle avec l’intelligence artificielle.”
+
+Subtext in Arabic.
+
+Buttons:
+
+“Créer un compte Entreprise”
+
+“Créer un compte Bureau d’Étude”
+
+“Essayer la recherche intelligente”
+
+Sections:
+
+Who We Are (Peak Power World)
+
+Engagement (values, Moroccan trust)
+
+Awareness (educational visuals about BO)
+
+Footer: Contact, Legal Notice, FAQ
+
+CTA repeated at end of each section.
+
+🔐 AUTH & SECURITY
+
+Firebase Auth + MongoDB user collection sync
+
+JWT for API sessions
+
+All users must log in before accessing dashboards
+
+Role-based middleware (entreprise, particulier, bureau)
+
+Strong password + email verification required
+
+📈 ADDITIONAL FEATURES
+
+Bilingual content automatically translated (AI-based)
+
+Role-based onboarding tutorial per user type
+
+“ConfoUP Academy” section (future) for guides
+
+Responsive on desktop & mobile
+
+Dashboard autosave state (for pinned cards and charts)

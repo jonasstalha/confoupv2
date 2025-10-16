@@ -83,9 +83,13 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["var(--font-sans)"],
+        sans: ["Poppins", "Cairo", "var(--font-sans)"],
         serif: ["var(--font-serif)"],
         mono: ["var(--font-mono)"],
+      },
+      fontSize: {
+        'hero': ['3rem', { lineHeight: '1.1', fontWeight: '700' }],
+        'display': ['2.5rem', { lineHeight: '1.2', fontWeight: '700' }],
       },
       keyframes: {
         "accordion-down": {

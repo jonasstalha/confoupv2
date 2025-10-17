@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLocation } from 'wouter';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { createBureauProfile } from '@/lib/db';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -25,21 +26,11 @@ export default function BureauOnboarding() {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/bureau-profiles', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: user?.id,
-          ...formData,
-        }),
+  await createBureauProfile({ userId: user?.id, ...formData });
+      toast({
+        title: 'Profil créé avec succès',
       });
-
-      if (response.ok) {
-        toast({
-          title: 'Profil créé avec succès',
-        });
-        setLocation('/bureau/dashboard');
-      }
+      setLocation('/bureau/dashboard');
     } catch (error) {
       toast({
         variant: 'destructive',

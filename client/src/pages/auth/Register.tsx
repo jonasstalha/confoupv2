@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
+import { createUser, getUserByFirebaseUid } from '@/lib/db';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
 import { SiGoogle } from 'react-icons/si';
@@ -36,22 +37,7 @@ export default function Register() {
   }, [searchParams]);
 
   const createUserInBackend = async (firebaseUid: string, email: string, displayName: string, role: UserRole) => {
-    const response = await fetch('/api/users', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email,
-        displayName,
-        role,
-        firebaseUid,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to create user');
-    }
-
-    return response.json();
+    return createUser({ firebaseUid, email, displayName, role });
   };
 
   const handleEmailRegister = async (e: React.FormEvent) => {
@@ -118,9 +104,9 @@ export default function Register() {
     try {
       const result = await signInWithPopup(auth, provider);
       
-      const checkResponse = await fetch(`/api/users/by-firebase-uid/${result.user.uid}`);
-      
-      if (!checkResponse.ok) {
+      const existing = await getUserByFirebaseUid(result.user.uid);
+
+      if (!existing) {
         const userData = await createUserInBackend(
           result.user.uid,
           result.user.email!,
@@ -137,9 +123,8 @@ export default function Register() {
           setLocation('/bureau/onboarding');
         }
       } else {
-        const userData = await checkResponse.json();
-        setUser(userData);
-        setLocation(`/${userData.role}/dashboard`);
+        setUser(existing as any);
+        setLocation(`/${(existing as any).role}/dashboard`);
       }
     } catch (error: any) {
       toast({

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { Link, useLocation } from 'wouter';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -49,6 +49,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
   const { user } = useAuth();
   const { t } = useLanguage();
   const [location] = useLocation();
+  const [showBox, setShowBox] = useState(false);
 
   if (!user) return null;
 
@@ -94,9 +95,42 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
         <div className="flex flex-col flex-1">
           <header className="flex items-center justify-between p-4 border-b">
             <SidebarTrigger data-testid="button-sidebar-toggle" />
-            <ThemeToggle />
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              {/* Toggle for the display box */}
+              <button
+                onClick={() => setShowBox((s) => !s)}
+                className="px-3 py-1 rounded bg-primary text-white text-sm"
+                data-testid="button-toggle-display-box"
+              >
+                {showBox ? t('dashboard.hideDisplayBox') : t('dashboard.showDisplayBox')}
+              </button>
+            </div>
           </header>
-          <main className="flex-1 overflow-auto p-6">{children}</main>
+          <main className="flex-1 overflow-auto p-6 relative">
+            {/* Display box overlays the content beneath it when visible */}
+            {showBox && (
+              <div className="absolute left-6 right-6 top-6 z-30 bg-card border p-4 rounded-md shadow-lg">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="text-lg font-semibold">{t('dashboard.displayBoxTitle') || 'Display Box'}</h3>
+                    <p className="text-sm text-muted-foreground">{t('dashboard.displayBoxDescription') || 'This box overlays content below it. Click hide to dismiss.'}</p>
+                  </div>
+                  <div>
+                    <button
+                      onClick={() => setShowBox(false)}
+                      className="px-3 py-1 rounded border text-sm"
+                      data-testid="button-hide-display-box"
+                    >
+                      {t('common.hide') || 'Hide'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {children}
+          </main>
         </div>
       </div>
     </SidebarProvider>

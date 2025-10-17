@@ -8,13 +8,15 @@ import { Link } from 'wouter';
 import { Plus, Building2, AlertTriangle, TrendingUp, Activity } from 'lucide-react';
 import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { EntrepriseBox, BoxWithAlerts } from '@shared/schema';
+import { getEntrepriseBoxesByBureau } from '@/lib/db';
 
 export default function BureauDashboard() {
   const { t, language } = useLanguage();
   const { user } = useAuth();
 
   const { data: boxes = [], isLoading } = useQuery<BoxWithAlerts[]>({
-    queryKey: [`/api/entreprise-boxes/by-bureau/${user?.id}`],
+    queryKey: ['entrepriseBoxes', user?.id],
+    queryFn: () => getEntrepriseBoxesByBureau(user?.id as string),
     enabled: !!user,
   });
 
@@ -133,7 +135,7 @@ export default function BureauDashboard() {
                   fill="#8884d8"
                   paddingAngle={5}
                   dataKey="value"
-                  label={({ name, value }) => `${name}: ${value}`}
+                  label={({ name, value }: { name: string; value: number }) => `${name}: ${value}`}
                 >
                   {donutData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

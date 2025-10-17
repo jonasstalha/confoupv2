@@ -9,7 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { Search, Mic, Heart, Star, Filter } from 'lucide-react';
 import { BoDocument, Favorite } from '@shared/schema';
-import { apiRequest, queryClient } from '@/lib/queryClient';
+import { queryClient } from '@/lib/queryClient';
+import { getBoDocumentsLatest, getFavoritesByUser, addFavorite, removeFavorite } from '@/lib/db';
 import { useToast } from '@/hooks/use-toast';
 
 export default function ParticulierDashboard() {
@@ -20,19 +21,20 @@ export default function ParticulierDashboard() {
   const [categoryFilter, setCategoryFilter] = useState('all');
 
   const { data: boDocuments = [], isLoading } = useQuery<BoDocument[]>({
-    queryKey: ['/api/bo-documents/latest'],
+    queryKey: ['boDocuments', 'latest'],
+    queryFn: () => getBoDocumentsLatest(),
   });
 
   const { data: favorites = [] } = useQuery<Favorite[]>({
-    queryKey: [`/api/favorites/by-user/${user?.id}`],
+    queryKey: ['favorites', user?.id],
+    queryFn: () => getFavoritesByUser(user?.id as string),
     enabled: !!user,
   });
 
   const addFavoriteMutation = useMutation({
-    mutationFn: (boDocumentId: string) =>
-      apiRequest('POST', '/api/favorites', { userId: user?.id, boDocumentId }),
+    mutationFn: (boDocumentId: string) => addFavorite({ userId: user?.id as string, boDocumentId }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [`/api/favorites/by-user/${user?.id}`] });
+      queryClient.invalidateQueries({ queryKey: ['favorites', user?.id] });
       toast({
         title: language === 'fr' ? 'Ajouté aux favoris' : 'تمت الإضافة إلى المفضلة',
       });
@@ -40,10 +42,9 @@ export default function ParticulierDashboard() {
   });
 
   const removeFavoriteMutation = useMutation({
-    mutationFn: (favoriteId: string) =>
-      apiRequest('DELETE', `/api/favorites/${favoriteId}`, {}),
+    mutationFn: (favoriteId: string) => removeFavorite(favoriteId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [`/api/favorites/by-user/${user?.id}`] });
+      queryClient.invalidateQueries({ queryKey: ['favorites', user?.id] });
       toast({
         title: language === 'fr' ? 'Retiré des favoris' : 'تمت الإزالة من المفضلة',
       });

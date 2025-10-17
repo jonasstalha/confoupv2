@@ -6,18 +6,21 @@ import { useQuery } from '@tanstack/react-query';
 import { AlertTriangle, TrendingUp, Shield, Activity, Bell } from 'lucide-react';
 import { BarChart, Bar, PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { BoDocument, AlertWithDocument } from '@shared/schema';
+import { getAlertsByUser, getBoDocumentsLatest } from '@/lib/db';
 
 export default function EntrepriseDashboard() {
   const { t } = useLanguage();
   const { user } = useAuth();
 
   const { data: alerts = [], isLoading: alertsLoading } = useQuery<AlertWithDocument[]>({
-    queryKey: [`/api/alerts/by-user/${user?.id}`],
+    queryKey: ['alerts', user?.id],
+    queryFn: () => getAlertsByUser(user?.id as string),
     enabled: !!user,
   });
 
   const { data: boDocuments = [], isLoading: docsLoading } = useQuery<BoDocument[]>({
-    queryKey: ['/api/bo-documents/latest'],
+    queryKey: ['boDocuments', 'latest'],
+    queryFn: () => getBoDocumentsLatest(),
   });
 
   const unreadAlerts = alerts.filter((a) => !a.isRead).length;
@@ -147,7 +150,7 @@ export default function EntrepriseDashboard() {
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                  label={({ name, percent }: { name: string; percent: number }) => `${name} ${(percent * 100).toFixed(0)}%`}
                   outerRadius={80}
                   fill="#8884d8"
                   dataKey="value"

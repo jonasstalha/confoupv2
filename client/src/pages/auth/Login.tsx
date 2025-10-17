@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
@@ -8,13 +8,14 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
+import { getUserByFirebaseUid } from '@/lib/db';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
 import { SiGoogle } from 'react-icons/si';
 
 export default function Login() {
   const { t } = useLanguage();
-  const { setUser } = useAuth();
+  const { firebaseUser, user, setUser } = useAuth();
   const { toast } = useToast();
   const [, setLocation] = useLocation();
   const [loading, setLoading] = useState(false);
@@ -26,7 +27,12 @@ export default function Login() {
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
+    // Basic validation to avoid empty requests (prevents 400 from Firebase REST endpoint)
+    if (!formData.email || !formData.password) {
+      toast({ variant: 'destructive', title: t('common.error'), description: t('auth.provideEmailPassword') });
+      setLoading(false);
+      return;
+    }
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -34,19 +40,16 @@ export default function Login() {
         formData.password
       );
 
-      const response = await fetch(`/api/users/by-firebase-uid/${userCredential.user.uid}`);
-      if (response.ok) {
-        const userData = await response.json();
-        setUser(userData);
-        
+      const userData = await getUserByFirebaseUid(userCredential.user.uid);
+      if (userData) {
+        setUser(userData as any);
         // Redirect based on role
-        if (userData.role === 'entreprise') {
-          setLocation('/entreprise/dashboard');
-        } else if (userData.role === 'particulier') {
-          setLocation('/particulier/dashboard');
-        } else if (userData.role === 'bureau') {
-          setLocation('/bureau/dashboard');
-        }
+        if ((userData as any).role === 'entreprise') setLocation('/entreprise/dashboard');
+        else if ((userData as any).role === 'particulier') setLocation('/particulier/dashboard');
+        else if ((userData as any).role === 'bureau') setLocation('/bureau/dashboard');
+      } else {
+        // No backend user record found — send to register flow
+        setLocation('/auth/register');
       }
     } catch (error: any) {
       toast({
@@ -54,10 +57,21 @@ export default function Login() {
         title: t('common.error'),
         description: error.message,
       });
+      console.error('Login error', error);
     } finally {
       setLoading(false);
     }
   };
+
+  // If already authenticated and we have user info, redirect away from login
+  useEffect(() => {
+    if (user) {
+      const role = (user as any).role;
+      if (role === 'entreprise') setLocation('/entreprise/dashboard');
+      else if (role === 'particulier') setLocation('/particulier/dashboard');
+      else if (role === 'bureau') setLocation('/bureau/dashboard');
+    }
+  }, [user]);
 
   const handleGoogleLogin = async () => {
     setLoading(true);
@@ -66,16 +80,14 @@ export default function Login() {
     try {
       const result = await signInWithPopup(auth, provider);
       
-      const response = await fetch(`/api/users/by-firebase-uid/${result.user.uid}`);
-      if (response.ok) {
-        const userData = await response.json();
-        setUser(userData);
-        
-        if (userData.role === 'entreprise') {
+      const userData = await getUserByFirebaseUid(result.user.uid);
+      if (userData) {
+        setUser(userData as any);
+        if ((userData as any).role === 'entreprise') {
           setLocation('/entreprise/dashboard');
-        } else if (userData.role === 'particulier') {
+        } else if ((userData as any).role === 'particulier') {
           setLocation('/particulier/dashboard');
-        } else if (userData.role === 'bureau') {
+        } else if ((userData as any).role === 'bureau') {
           setLocation('/bureau/dashboard');
         }
       } else {

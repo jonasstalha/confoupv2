@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
 import { apiRequest, queryClient } from '@/lib/queryClient';
+import { addEntrepriseBox } from '@/lib/db';
 
 export default function AddEntreprise() {
   const { t } = useLanguage();
@@ -29,13 +30,9 @@ export default function AddEntreprise() {
     setLoading(true);
 
     try {
-      await apiRequest('POST', '/api/entreprise-boxes', {
-        bureauUserId: user?.id,
-        ...formData,
-        status: 'active',
-      });
+  await addEntrepriseBox({ bureauUserId: user?.id, ...formData, status: 'active' });
 
-      queryClient.invalidateQueries({ queryKey: [`/api/entreprise-boxes/by-bureau/${user?.id}`] });
+      queryClient.invalidateQueries({ queryKey: ['entrepriseBoxes', user?.id] });
       toast({
         title: 'Entreprise ajoutée avec succès',
       });

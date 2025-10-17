@@ -15,12 +15,7 @@ export default function Landing() {
         
         <div className="container relative z-10 px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-block mb-6 px-4 py-2 rounded-full border border-ring/30 bg-background/10 backdrop-blur-sm">
-              <span className="text-sm font-medium text-background flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-ring" />
-                Peak Power World
-              </span>
-            </div>
+
             
             <h1 className={`text-hero text-background mb-4 ${language === 'ar' ? 'font-cairo' : ''}`}>
               {t('landing.tagline')}

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLocation } from 'wouter';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { createEntrepriseProfile } from '@/lib/db';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -29,21 +30,12 @@ export default function EntrepriseOnboarding() {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/entreprise-profiles', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: user?.id,
-          ...formData,
-        }),
+  await createEntrepriseProfile({ userId: user?.id, ...formData });
+      // if created successfully
+      toast({
+        title: 'Profil créé avec succès',
       });
-
-      if (response.ok) {
-        toast({
-          title: 'Profil créé avec succès',
-        });
-        setLocation('/entreprise/dashboard');
-      }
+      setLocation('/entreprise/dashboard');
     } catch (error) {
       toast({
         variant: 'destructive',

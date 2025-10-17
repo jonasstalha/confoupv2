@@ -4,7 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageProvider } from "@/contexts/LanguageContext";
-import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { TopNavigation } from "@/components/TopNavigation";
 import { DashboardLayout } from "@/components/DashboardLayout";
@@ -106,11 +106,9 @@ export default function App() {
       <TooltipProvider>
         <ThemeProvider>
           <LanguageProvider>
-            <AuthProvider>
               <TopNavigation />
               <Router />
               <Toaster />
-            </AuthProvider>
           </LanguageProvider>
         </ThemeProvider>
       </TooltipProvider>
